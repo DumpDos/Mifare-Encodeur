@@ -3,7 +3,6 @@
 
 #--- librairies ---#
 import os
-import re
 import sys
 import time
 import datetime
@@ -61,17 +60,31 @@ def read_devi(type, keys_file, action, file_name):
 		keys_file_type = keys_file
 
 	if file_name == '':
-
-		os.system('mfoc -P 500 -f %s -O %s' % (keys_file_type, file_name_time))
 		aff_logo()
+		print"\033[36mCopie du Badge en cours..."
+		os.system('mfoc -P 500 -f %s -O %s' % (keys_file_type, file_name_time))
 	
 	else:
 		aff_logo()
-		print""
 		print"\033[36mCopie du Badge en cours..."
+		file_name = ('./dumps/%s' % file_name)
 		os.system('mfoc -P 500 -f %s -O %s' % (keys_file_type, file_name))
 	
 	return (file_name)
+
+#--- fonction lecture badge ---#
+
+def write_devi(org_card):
+
+	type_raw = 'm'
+	keys_raw = 'none'
+	actn_raw = 'r'
+	file_nam = 'read_write.dmp'
+	
+	vir_card = read_devi(type_raw, keys_raw, actn_raw, file_nam)
+	
+	
+	os.system('nfc-mfclassic W a carte-originale.dmp carte-vierge.dmp' % ()
 
 #--- Script ---#
 
@@ -117,8 +130,13 @@ try:
 	if actn_raw == 'r':
 		print""
 		file_nam = raw_input("\033[33mNom du dump : ")
-		read_devi(type_raw, keys_raw, actn_raw, file_nam)
-
+		file_nam = read_devi(type_raw, keys_raw, actn_raw, file_nam)
+		aff_logo()
+		print("\033[36mDump enregistré dans : %s" %(file_nam))
+		
+	elif actn_raw == 'w'
+		file_nam = read_devi(type_raw, keys_raw, actn_raw, file_nam)
+		
 	elif actn_raw == 'c':
 		print""
 		file_raw = raw_input("\033[33mEmplacement du fichier .dmp : ")
